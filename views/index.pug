@@ -1,0 +1,45 @@
+extends layout
+
+block content
+
+  form(action='./addMovie' method='POST' class='form-registration')
+    div(class='row my-3')
+        div(class='col-md-2 align-bottom')
+          label(for="movieName" class='fs-5') New movie
+        div(class='col-md-8')
+          input(class="form-control form-control-sm" type="text" name='movieName', placeholder="Enter new movie here" )
+          input(class="form-control form-control-sm" type="text" name='director', placeholder="Enter movie director here" )
+        div(class='col-md-2 text-end')
+          button(class='btn btn-success btn-sm' type='submit') Add task
+
+
+  h5(class='my-2') Movies to watch
+
+  div(class='row mb-3 border-bottom border-3')
+    div(class='col-md-6 fw-bold') Movie
+    div(class='col-md-2 fw-bold') Director
+    div(class='col-md-4 fw-bold') Action
+
+  each movie in currentMovies
+    div(class='row mb-2')
+      div(class='col-sm-6') #{movie.movieName}
+      div(class='col-sm-2') #{movie.director}
+      div(class='col-sm-2')
+        form(action='./watchMovie' method='POST' class='form-registration')
+          input(type='hidden' name='_id' value=`${movie._id}`)
+          button(class='btn btn-primary btn-sm mx-1' type='submit') Complete
+      div(class='col-sm-2')
+        form(action='./deleteMovie' method='POST' class='form-registration')
+          input(type='hidden' name='_id' value=`${movie._id}`)
+          button(class='btn btn-danger btn-sm mx-1') Delete
+
+  h5(class='my-2') Watched Movies
+  div(class='row mb-3 border-bottom border-3')
+    div(class='col-sm-8 fw-bold') Movie
+    div(class='col-sm-2 fw-bold') Director
+    div(class='col-sm-2 fw-bold') Read
+  each movie in completedMovies
+    div(class='row mb-3')
+      div(class='col-sm-8') #{movie.taskName}
+      div(class='col-sm-2') #{movie.director}
+      div(class='col-sm-2') #{movie.watchDate}
